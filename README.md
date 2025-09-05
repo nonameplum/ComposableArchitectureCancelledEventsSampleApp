@@ -4,6 +4,12 @@ This project demonstrates and investigates an issue with The Composable Architec
 
 ## Issue Description
 
+## UPDATE - Clarification: Expected TCA behavior
+
+Per guidance from the TCA maintainers, the behavior demonstrated here is **expected** in The Composable Architecture, even if it may feel unintuitive at first.
+
+In short, when a child feature is dismissed, TCA cancels effects that originated from that child (and any effects they spawned), even if a parent reducer is the one returning the effect.
+
 ### Expected Behavior
 When a reducer remains in place and only its internal destination states change (e.g., from `destination1` to `destination2`), effects running in the parent reducer should **NOT** be cancelled.
 
@@ -49,22 +55,12 @@ return .run { _ in
 
 ## Console Output
 
-When the issue occurs, you should see:
 ```
 start running something
 ask to change destination
 will change destination
 did change destination
 ❌ finished with error: CancellationError()
-```
-
-When working correctly, you should see:
-```
-start running something
-ask to change destination
-will change destination
-did change destination
-✅ finished successfully
 ```
 
 ## TCA Version

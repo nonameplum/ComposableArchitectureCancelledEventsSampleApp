@@ -77,6 +77,16 @@ struct StableReducer {
                     } catch {
                         print("❌ finished with error: \(error)")
                     }
+
+                    // Workaround to opt-out from the cancellation
+                    Task {
+                        do {
+                            try await Task.sleep(for: .seconds(10))
+                            print("✅ opted-out Task finished successfully")
+                        } catch {
+                            print("❌ opted-out Task finished with error: \(error)")
+                        }
+                    }
                 }
             case .destination(.presented(.destination1(.task))):
                 return .none
